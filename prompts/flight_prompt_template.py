@@ -1,20 +1,19 @@
-from langchain import PromptTemplate # type: ignore
+from langchain.prompts import PromptTemplate
 
-flight_details_prompt = PromptTemplate(
-    input_variables=["origin", "destination", "date"],
-    template="""
-    Let's book your flight!
-    {%- if origin == None -%}
-    Where are you flying from?
-    {%- elif destination == None -%}
-    Where are you flying to?
-    {%- elif date == None -%}
-    What date are you planning to fly?
-    {%- else -%}
-    Confirming flight details:
-    - From: {{ origin }}
-    - To: {{ destination }}
-    - Date: {{ date }}
-    {%- endif -%}
-    """
+# Prompt for origin
+origin_prompt = PromptTemplate(
+    input_variables=[],
+    template="Where are you flying from?"
+)
+
+# Prompt for destination
+destination_prompt = PromptTemplate(
+    input_variables=["origin"],
+    template="You're flying from {origin}. Where are you flying to?"
+)
+
+# Prompt for date
+date_prompt = PromptTemplate(
+    input_variables=["origin", "destination"],
+    template="You're flying from {origin} to {destination}. What date are you planning to fly?"
 )
